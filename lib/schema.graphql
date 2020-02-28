@@ -1,0 +1,90 @@
+type Admin {
+	_id: ID!
+	cuenta: String!
+	clave: String!
+	nombres: String!
+	estado: String
+    activo: Boolean
+	fechacreacion: String
+	fechaactualizacion: String
+
+}
+
+type UnidadMedida {
+	_id: ID!
+	nombre:String!
+    estado: String
+    activo: Boolean
+	fechacreacion: String
+    idcreacion:ID
+	fechaactualizacion: String
+    idactualizacion:ID
+
+}
+
+type BasicResponse{
+    code:String!
+    message:String!
+}
+
+type FilterUnidadMedida{
+    list:[UnidadMedida]
+    total:Int!
+}
+
+
+input AdminInput {	
+	cuenta: String!
+	clave: String!
+	nombres: String!	
+    estado: String
+    activo: Boolean
+	fechacreacion: String
+	fechaactualizacion: String		
+}
+
+input UnidadMedidaInput{
+    nombre:String!
+    idcreacion:ID!
+}
+
+input UnidadMedidaEditarInput{
+    nombre:String!
+    idactualizacion:ID!
+    estado:String!
+
+}
+
+input FiltrarUnidadesInput{
+    nombre:String
+    estado:String
+    pagina:Int!
+    cantidad:Int!
+}
+
+type Query {
+    "Todos los admins"
+    admins: [Admin]
+      "Todas las Unidades de Medida"
+    unidadesmedida: [UnidadMedida]
+    "Obtener Unidad"
+    unidadmedida(id:ID!):UnidadMedida
+    "Obtener Unidades Filtradas"
+    obtenerUnidadesFiltradas:FilterUnidadMedida
+    
+}
+
+type Mutation {
+    "Crear un admin"
+    crearAdmin(input:AdminInput): Admin
+    "Eliminar admin"
+    eliminarAdmin(_id:ID!):BasicResponse
+    "Validar admin"
+    validaradmin(usuario:String!,clave:String!):Admin
+    "Crear Unidad"
+    crearUnidad(input:UnidadMedidaInput):UnidadMedida
+    "Filtrar Unidades"
+    filtrarUnidad(input:FiltrarUnidadesInput):FilterUnidadMedida
+    "Editar Unidad"
+    editarUnidad(_id:ID!,input:UnidadMedidaEditarInput):UnidadMedida
+}
